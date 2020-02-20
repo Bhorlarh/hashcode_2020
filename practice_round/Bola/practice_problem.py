@@ -1,7 +1,12 @@
-inputFileName = "../e_also_big.in"
-
+inputDataSets = ["../a_example.in", "../b_small.in",
+                 "../c_medium.in", "../d_quite_big.in",
+                 "../e_also_big.in"]
 
 def main():
+    for j, i in enumerate(inputDataSets):
+        orderPizzas(i);
+
+def orderPizzas(inputFileName):
 
     # List of all lines of pizzas
     allPizzas = []
@@ -20,6 +25,7 @@ def main():
 
     maximumTotalPizzas = int(allPizzas[0][0])
     typesOfPizzas = int(allPizzas[0][1])
+    pizzaSum = 0
 
     # loop through all lines of pizzas from the last line
     for i in range(linesOfPizza - 1, 0, -1):
@@ -30,17 +36,16 @@ def main():
             currentPizza = int(currentLine[j])
 
             # make sure result is less than total pizzas
-            if (currentPizza + sum(result)) <= maximumTotalPizzas:
-                result.insert(0, currentPizza)
+            if (currentPizza + pizzaSum) <= maximumTotalPizzas:
+                result.insert(0, j)
+                pizzaSum += currentPizza
 
-#    print(f"Types of pizzas ordered: {len(result)}")
-#    print(f"Max possible Score: {maximumTotalPizzas}")
-#    print(f"Score gotten: {sum(result)}\n\n")
-    createSubmission(result)
+    createSubmission(result, inputFileName)
 
-def createSubmission(answer):
-    with open(f'./{inputFileName[2]}_submission.in', 'w') as outputFile:
+def createSubmission(answer, inputFileName):
+    with open(f'./{inputFileName[3]}_submission.in', 'w') as outputFile:
         outputFile.write(f"{len(answer)} \n")
         for i in answer:
             outputFile.write(str(i) + " ")
+
 main()
